@@ -1,0 +1,103 @@
+Jupyter Notebook
+linear
+
+
+import pandas as pd
+import numpy as np
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error
+from sklearn import datasets
+import matplotlib.pyplot as plt
+df=pd.read_csv("D:\houseprice.csv")
+df.describe()
+area	prices
+count	7.000000	7.000000
+mean	3264.285714	635714.285714
+std	540.612527	65918.420000
+min	2500.000000	550000.000000
+25%	2900.000000	587500.000000
+50%	3250.000000	625000.000000
+75%	3650.000000	687500.000000
+max	4000.000000	725000.000000
+%matplotlib inline
+plt.xlabel('area')
+plt.ylabel('prices')
+plt.scatter(df.area,df.prices,color='red',marker='+')
+<matplotlib.collections.PathCollection at 0x14c5b35a208>
+
+new_df=df.drop('prices',axis='columns')
+new_df
+area
+0	2500
+1	2800
+2	3000
+3	3250
+4	3500
+5	3800
+6	4000
+prices=df.prices
+prices
+0    550000
+1    575000
+2    600000
+3    625000
+4    675000
+5    700000
+6    725000
+Name: prices, dtype: int64
+df.head()
+area	prices
+0	2500	550000
+1	2800	575000
+2	3000	600000
+3	3250	625000
+4	3500	675000
+df.isnull().any()
+area      False
+prices    False
+dtype: bool
+train,test=train_test_split(df,test_size=0.20,random_state=0)
+train.head()
+area	prices
+1	2800	575000
+3	3250	625000
+0	2500	550000
+5	3800	700000
+4	3500	675000
+X_train=train[['area','prices']]
+y_train=train.prices
+X_test=test[['area','prices']]
+y_test=test.prices
+print(X_train.shape)
+print(X_test.shape)
+print(y_train.shape)
+print(y_test.shape)
+(5, 2)
+(2, 2)
+(5,)
+(2,)
+print(X_test[0:5])
+   area  prices
+6  4000  725000
+2  3000  600000
+print(X_test.shape)
+(2, 2)
+print(y_test[0:5])
+6    725000
+2    600000
+Name: prices, dtype: int64
+print(y_test.shape)
+(2,)
+model=LinearRegression()
+model.fit(new_df,prices)
+LinearRegression(copy_X=True, fit_intercept=True, n_jobs=None, normalize=False)
+model.predict([[3000]])
+array([603660.89613035])
+model.coef_
+array([121.28309572])
+3300*135.78767123+180616.43835616932
+628715.7534151693
+model.predict([[5000]])
+array([846227.08757637])
+​
